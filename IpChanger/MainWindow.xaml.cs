@@ -23,8 +23,8 @@ namespace IpChanger
         public MainWindow()
         {
             InitializeComponent();
+            loadUserConfig();
             getCurrentInformations();
-            loadUserConfig();     
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -58,7 +58,7 @@ namespace IpChanger
             static public string GetSubnetMask(string ipaddress)
             {
                 uint firstOctet = ReturnFirtsOctet(ipaddress);
-                if (firstOctet >= 0 && firstOctet <= 127)
+                if (firstOctet >= 0 && firstOctet <= 127 && firstOctet != 0)
                     return "255.0.0.0";
 
                 else if (firstOctet >= 128 && firstOctet <= 191)
@@ -66,18 +66,38 @@ namespace IpChanger
 
                 else if (firstOctet >= 192 && firstOctet <= 223)
                     return "255.255.255.0";
-
+                else if (ipaddress.Contains(".") == false)
+                    return "";
                 else return "0.0.0.0";
+            }
+
+            static public string gatewayAutoComplete(string ipaddress)
+            {
+                if (ipaddress.Contains(".") == true)
+                {
+                    string gateWayAddress = ipaddress.Substring(0, ipaddress.LastIndexOf("."));
+                    return gateWayAddress + ".1";
+                }
+                else
+                    return "";
             }
 
             static public uint ReturnFirtsOctet(string ipAddress)
 
             {
-                IPAddress iPAddress = System.Net.IPAddress.Parse(ipAddress);
-                byte[] byteIP = iPAddress.GetAddressBytes();
-                uint ipInUint = (uint)byteIP[0];
+                //IPAddress IP = IPAddress.Parse(ipAddress);
+                IPAddress IP;
+                bool flag = IPAddress.TryParse(ipAddress, out IP);
+                if (flag == true)
+                {
+                    IP = IPAddress.Parse(ipAddress);
+                    byte[] byteIP = IP.GetAddressBytes();
+                    uint ipInUint = (uint)byteIP[0];
 
-                return ipInUint;
+                    return ipInUint;
+                }
+                else
+                    return 0;
             }
         }
 
@@ -139,10 +159,46 @@ namespace IpChanger
             conf5Gateway.Text = UserDefinedSaves.Default.konfig5gateway;
         }
 
+        public string subnetAutoComplete(string IPTextbox)
+        {
+            return IPClassTester.GetSubnetMask(IPTextbox);
+
+        }
+
         private void On_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             saveUserConfig();
             UserDefinedSaves.Default.Save();
+        }
+
+        private void config1_ip_updated(object sender, RoutedEventArgs e)
+        {
+            conf1Subnet.Text = subnetAutoComplete(conf1IP.Text);
+            conf1Gateway.Text = IPClassTester.gatewayAutoComplete(conf1IP.Text);
+        }
+
+        private void config2_ip_updated(object sender, RoutedEventArgs e)
+        {
+            conf2Subnet.Text = subnetAutoComplete(conf2IP.Text);
+            conf2Gateway.Text = IPClassTester.gatewayAutoComplete(conf2IP.Text);
+        }
+
+        private void config3_ip_updated(object sender, RoutedEventArgs e)
+        {
+            conf3Subnet.Text = subnetAutoComplete(conf3IP.Text);
+            conf3Gateway.Text = IPClassTester.gatewayAutoComplete(conf3IP.Text);
+        }
+
+        private void config4_ip_updated(object sender, RoutedEventArgs e)
+        {
+            conf4Subnet.Text = subnetAutoComplete(conf4IP.Text);
+            conf4Gateway.Text = IPClassTester.gatewayAutoComplete(conf4IP.Text);
+        }
+
+        private void config5_ip_updated(object sender, RoutedEventArgs e)
+        {
+            conf5Subnet.Text = subnetAutoComplete(conf5IP.Text);
+            conf5Gateway.Text = IPClassTester.gatewayAutoComplete(conf5IP.Text);
         }
     }
 }
