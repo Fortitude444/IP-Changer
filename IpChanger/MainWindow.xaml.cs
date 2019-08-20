@@ -24,6 +24,7 @@ namespace IpChanger
         {
             InitializeComponent();
             getCurrentInformations();
+            loadUserConfig();     
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -90,6 +91,58 @@ namespace IpChanger
                 .Select(g => g?.Address)
                 .Where(a => a != null)
                 .FirstOrDefault();
+        }
+
+        public void saveUserConfig()
+        {
+
+            UserDefinedSaves.Default.konfig1ip = conf1IP.Text;
+            UserDefinedSaves.Default.konfig1subnet = conf1Subnet.Text;
+            UserDefinedSaves.Default.konfig1gateway = conf1Gateway.Text;
+
+            UserDefinedSaves.Default.konfig2ip = conf2IP.Text;
+            UserDefinedSaves.Default.konfig2subnet = conf2Subnet.Text;
+            UserDefinedSaves.Default.konfig2gateway = conf2Gateway.Text;
+
+            UserDefinedSaves.Default.konfig3ip = conf3IP.Text;
+            UserDefinedSaves.Default.konfig3subnet = conf3Subnet.Text;
+            UserDefinedSaves.Default.konfig3gateway = conf3Gateway.Text;
+
+            UserDefinedSaves.Default.konfig4ip = conf4IP.Text;
+            UserDefinedSaves.Default.konfig4subnet = conf4Subnet.Text;
+            UserDefinedSaves.Default.konfig4gateway = conf4Gateway.Text;
+
+            UserDefinedSaves.Default.konfig5ip = conf5IP.Text;
+            UserDefinedSaves.Default.konfig5subnet = conf5Subnet.Text;
+            UserDefinedSaves.Default.konfig5gateway = conf5Gateway.Text;
+        }
+        public void loadUserConfig()
+        {
+            conf1IP.Text = UserDefinedSaves.Default.konfig1ip;
+            conf1Subnet.Text = UserDefinedSaves.Default.konfig1subnet;
+            conf1Gateway.Text = UserDefinedSaves.Default.konfig1gateway;
+
+            conf2IP.Text = UserDefinedSaves.Default.konfig2ip;
+            conf2Subnet.Text = UserDefinedSaves.Default.konfig2subnet;
+            conf2Gateway.Text = UserDefinedSaves.Default.konfig2gateway;
+
+            conf3IP.Text = UserDefinedSaves.Default.konfig3ip;
+            conf3Subnet.Text = UserDefinedSaves.Default.konfig3subnet;
+            conf3Gateway.Text = UserDefinedSaves.Default.konfig3gateway;
+
+            conf4IP.Text = UserDefinedSaves.Default.konfig4ip;
+            conf4Subnet.Text = UserDefinedSaves.Default.konfig4subnet;
+            conf4Gateway.Text = UserDefinedSaves.Default.konfig4gateway;
+
+            conf5IP.Text = UserDefinedSaves.Default.konfig5ip;
+            conf5Subnet.Text = UserDefinedSaves.Default.konfig5subnet;
+            conf5Gateway.Text = UserDefinedSaves.Default.konfig5gateway;
+        }
+
+        private void On_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            saveUserConfig();
+            UserDefinedSaves.Default.Save();
         }
     }
 }
