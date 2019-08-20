@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -50,6 +52,23 @@ namespace IpChanger
                 }
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+
+        public void setIP(string IPAddress, string SubnetMask, string Gateway)
+        {
+            /*
+             * run as admin!
+             * hiba: nem a megfelelő ip-t állítja be
+             * 
+            string arguments = string.Format("netsh interface ipv4 set address name=\"Ethernet\" static {0} {1} {2}",IPAddress,SubnetMask,Gateway);
+            ProcessStartInfo procStartInfo = new ProcessStartInfo("netsh", arguments);
+
+            procStartInfo.RedirectStandardOutput = true;
+            procStartInfo.UseShellExecute = false;
+            procStartInfo.CreateNoWindow = true;
+
+            Process.Start(procStartInfo);
+            */
         }
 
         class IPClassTester
@@ -199,6 +218,11 @@ namespace IpChanger
         {
             conf5Subnet.Text = subnetAutoComplete(conf5IP.Text);
             conf5Gateway.Text = IPClassTester.gatewayAutoComplete(conf5IP.Text);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            setIP(conf1IP.Text,conf1Subnet.Text,conf1Gateway.Text);
         }
     }
 }
