@@ -27,6 +27,7 @@ namespace IpChanger
             InitializeComponent();
             loadUserConfig();
             getCurrentInformations();
+            getInterfaces();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -56,7 +57,7 @@ namespace IpChanger
 
         public void setIP(string IPAddress, string SubnetMask, string Gateway)
         {
-            string myDesc = "Realtek PCIe GbE Family Controller";
+            string selectedNetworkAdapter = networkinterfaceList.SelectedItem.ToString();
             var adapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
             var networkCollection = adapterConfig.GetInstances();
 
@@ -64,7 +65,7 @@ namespace IpChanger
             {
                 string description = adapter["Description"] as string;
                 if (string.Compare(description,
-                    myDesc, StringComparison.InvariantCultureIgnoreCase) == 0)
+                    selectedNetworkAdapter, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     try
                     {
@@ -120,7 +121,6 @@ namespace IpChanger
             static public uint ReturnFirtsOctet(string ipAddress)
 
             {
-                //IPAddress IP = IPAddress.Parse(ipAddress);
                 IPAddress IP;
                 bool flag = IPAddress.TryParse(ipAddress, out IP);
                 if (flag == true)
@@ -274,6 +274,16 @@ namespace IpChanger
             {
                 setIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text);
             }
+        }
+
+        public void getInterfaces()
+        {
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (NetworkInterface adapter in nics)
+            {
+                networkinterfaceList.Items.Add(adapter.Description);
+            }
+            networkinterfaceList.SelectedIndex = 0;
         }
     }
 }

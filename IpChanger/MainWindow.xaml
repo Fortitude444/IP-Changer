@@ -41,6 +41,8 @@
         <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,185,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf3"/>
         <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,217,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf4"/>
         <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,250,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf5"/>
+        <ComboBox Name="networkinterfaceList" HorizontalAlignment="Left" Height="25" Margin="138,294,0,0" VerticalAlignment="Top" Width="223"/>
+        <Label Content="Network Interface:" HorizontalAlignment="Left" Height="35" Margin="18,294,0,0" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>
