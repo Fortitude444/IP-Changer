@@ -56,19 +56,35 @@ namespace IpChanger
 
         public void setIP(string IPAddress, string SubnetMask, string Gateway)
         {
-            /*
-             * run as admin!
-             * hiba: nem a megfelelő ip-t állítja be
-             * 
-            string arguments = string.Format("netsh interface ipv4 set address name=\"Ethernet\" static {0} {1} {2}",IPAddress,SubnetMask,Gateway);
-            ProcessStartInfo procStartInfo = new ProcessStartInfo("netsh", arguments);
+            string myDesc = "Realtek PCIe GbE Family Controller";
+            var adapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            var networkCollection = adapterConfig.GetInstances();
 
-            procStartInfo.RedirectStandardOutput = true;
-            procStartInfo.UseShellExecute = false;
-            procStartInfo.CreateNoWindow = true;
+            foreach (ManagementObject adapter in networkCollection)
+            {
+                string description = adapter["Description"] as string;
+                if (string.Compare(description,
+                    myDesc, StringComparison.InvariantCultureIgnoreCase) == 0)
+                {
+                    try
+                    {
+                        var newGateway = adapter.GetMethodParameters("SetGateways");    // set def. gateway
+                        newGateway["DefaultIPGateway"] = new string[] { Gateway };
+                        newGateway["GatewayCostMetric"] = new int[] { 1 };
 
-            Process.Start(procStartInfo);
-            */
+                        var newAddress = adapter.GetMethodParameters("EnableStatic");   // set IP + subnet
+                        newAddress["IPAddress"] = new string[] { IPAddress };
+                        newAddress["SubnetMask"] = new string[] { SubnetMask };
+
+                        adapter.InvokeMethod("EnableStatic", newAddress, null);
+                        adapter.InvokeMethod("SetGateways", newGateway, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Nem sikerült beállítani a kívánt IP-címet");
+                    }
+                }
+            }
         }
 
         class IPClassTester
@@ -220,9 +236,44 @@ namespace IpChanger
             conf5Gateway.Text = IPClassTester.gatewayAutoComplete(conf5IP.Text);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void activate_conf1(object sender, RoutedEventArgs e)
         {
-            setIP(conf1IP.Text,conf1Subnet.Text,conf1Gateway.Text);
+            if (conf1IP.Text != "")
+            {
+                setIP(conf1IP.Text, conf1Subnet.Text, conf1Gateway.Text);
+            }
+        }
+
+        private void activate_conf2(object sender, RoutedEventArgs e)
+        {
+            if (conf2IP.Text != "")
+            {
+                setIP(conf2IP.Text, conf2Subnet.Text, conf2Gateway.Text);
+            }
+        }
+
+        private void activate_conf3(object sender, RoutedEventArgs e)
+        {
+            if (conf3IP.Text != "")
+            {
+                setIP(conf3IP.Text, conf3Subnet.Text, conf3Gateway.Text);
+            }
+        }
+
+        private void activate_conf4(object sender, RoutedEventArgs e)
+        {
+            if (conf4IP.Text != "")
+            {
+                setIP(conf4IP.Text, conf4Subnet.Text, conf4Gateway.Text);
+            }
+        }
+
+        private void activate_conf5(object sender, RoutedEventArgs e)
+        {
+            if (conf5IP.Text != "")
+            {
+                setIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text);
+            }
         }
     }
 }
