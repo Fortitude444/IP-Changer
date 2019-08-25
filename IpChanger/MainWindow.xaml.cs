@@ -128,7 +128,7 @@ namespace IpChanger
         {
             if (conf1IP.Text != "")
             {
-                IpHelper.SetIP(conf1IP.Text, conf1Subnet.Text, conf1Gateway.Text, networkinterfaceList.SelectedItem.ToString());
+                IpHelper.SetIP(conf1IP.Text, conf1Subnet.Text, conf1Gateway.Text, GetSelectedNetworkInterface().Name.ToString());
             }
         }
 
@@ -136,7 +136,7 @@ namespace IpChanger
         {
             if (conf2IP.Text != "")
             {
-                IpHelper.SetIP(conf2IP.Text, conf2Subnet.Text, conf2Gateway.Text, networkinterfaceList.SelectedItem.ToString());
+                IpHelper.SetIP(conf2IP.Text, conf2Subnet.Text, conf2Gateway.Text, GetSelectedNetworkInterface().Name.ToString());
             }
         }
 
@@ -144,7 +144,7 @@ namespace IpChanger
         {
             if (conf3IP.Text != "")
             {
-                IpHelper.SetIP(conf3IP.Text, conf3Subnet.Text, conf3Gateway.Text, networkinterfaceList.SelectedItem.ToString());
+                IpHelper.SetIP(conf3IP.Text, conf3Subnet.Text, conf3Gateway.Text, GetSelectedNetworkInterface().Name.ToString());
             }
         }
 
@@ -152,7 +152,7 @@ namespace IpChanger
         {
             if (conf4IP.Text != "")
             {
-                IpHelper.SetIP(conf4IP.Text, conf4Subnet.Text, conf4Gateway.Text, networkinterfaceList.SelectedItem.ToString());
+                IpHelper.SetIP(conf4IP.Text, conf4Subnet.Text, conf4Gateway.Text, GetSelectedNetworkInterface().Name.ToString());
             }
         }
 
@@ -160,7 +160,7 @@ namespace IpChanger
         {
             if (conf5IP.Text != "")
             {
-                IpHelper.SetIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text, networkinterfaceList.SelectedItem.ToString());
+                IpHelper.SetIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text, GetSelectedNetworkInterface().Name.ToString());
             }
         }
 
@@ -169,9 +169,11 @@ namespace IpChanger
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in nics)
             {
-                networkinterfaceList.Items.Add(adapter.Description);
+                networkinterfaceList.Items.Add(adapter);
             }
             networkinterfaceList.SelectedIndex = 0;
         }
+
+        private NetworkInterface GetSelectedNetworkInterface() => (NetworkInterface)networkinterfaceList.SelectedItem;
     }
 }

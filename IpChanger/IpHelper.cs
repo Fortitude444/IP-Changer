@@ -67,36 +67,22 @@ namespace IpChanger
                 .FirstOrDefault();
         }
 
-        public static void SetIP(string IPAddress, string SubnetMask, string Gateway, string selectedNetworkAdapter)
+        public static void SetIP(string ipAddress, string subnetMask, string defaultGateway, string networkAdapterName)
         {
-            var adapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
-            var networkCollection = adapterConfig.GetInstances();
+            const string commandTemplate =
+                "interface ipv4 set address name=\"{0}\" source=static address={1} mask={2} gateway={3}";
 
-            foreach (ManagementObject adapter in networkCollection)
-            {
-                string description = adapter["Description"] as string;
-                if (string.Compare(description,
-                    selectedNetworkAdapter, StringComparison.InvariantCultureIgnoreCase) == 0)
-                {
-                    try
-                    {
-                        var newGateway = adapter.GetMethodParameters("SetGateways");    // set def. gateway
-                        newGateway["DefaultIPGateway"] = new string[] { Gateway };
-                        newGateway["GatewayCostMetric"] = new int[] { 1 };
+            string arguments = string.Format(commandTemplate, networkAdapterName, ipAddress, subnetMask, defaultGateway);
 
-                        var newAddress = adapter.GetMethodParameters("EnableStatic");   // set IP + subnet
-                        newAddress["IPAddress"] = new string[] { IPAddress };
-                        newAddress["SubnetMask"] = new string[] { SubnetMask };
+            var startInfo = new ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.CreateNoWindow = true;
+            startInfo.FileName = "netsh";
+            startInfo.Arguments = arguments;
 
-                        adapter.InvokeMethod("EnableStatic", newAddress, null);
-                        adapter.InvokeMethod("SetGateways", newGateway, null);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Nem sikerült beállítani a kívánt IP-címet\n {0}", ex.ToString());
-                    }
-                }
-            }
+            Process cmdProcess = new Process();
+            cmdProcess.StartInfo = startInfo;
+            cmdProcess.Start();
         }
 
         public static string GatewayAutoComplete(string ipaddress)
