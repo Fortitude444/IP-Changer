@@ -2,11 +2,11 @@
 
 namespace IpChanger
 {
-    static class IpHelper
+    public static class IpHelper
     {
         public static string GetSubnetMask(string ipaddress)
         {
-            uint firstOctet = ReturnFirtsOctet(ipaddress);
+            uint firstOctet = ReturnFirstOctet(ipaddress);
             if (firstOctet >= 0 && firstOctet <= 127 && firstOctet != 0)
                 return "255.0.0.0";
 
@@ -33,8 +33,7 @@ namespace IpChanger
                 return "";
         }
 
-        public static uint ReturnFirtsOctet(string ipAddress)
-
+        private static uint ReturnFirstOctet(string ipAddress)
         {
             IPAddress IP;
             bool flag = IPAddress.TryParse(ipAddress, out IP);
