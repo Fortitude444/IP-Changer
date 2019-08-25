@@ -41,7 +41,7 @@
         <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,183,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf3"/>
         <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,218,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf4"/>
         <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,251,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf5"/>
-        <ComboBox Name="networkinterfaceList" HorizontalAlignment="Left" Height="25" Margin="143,294,0,0" VerticalAlignment="Top" Width="223">
+        <ComboBox Name="networkinterfaceList" HorizontalAlignment="Left" Height="25" Margin="143,294,0,0" VerticalAlignment="Top" Width="325">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
