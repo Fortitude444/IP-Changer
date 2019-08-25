@@ -82,7 +82,7 @@ namespace IpChanger
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Nem sikerült beállítani a kívánt IP-címet");
+                        MessageBox.Show("Nem sikerült beállítani a kívánt IP-címet\n {0}", ex.ToString());
                     }
                 }
             }
@@ -102,8 +102,10 @@ namespace IpChanger
 
                 else if (firstOctet >= 192 && firstOctet <= 223)
                     return "255.255.255.0";
+
                 else if (ipaddress.Contains(".") == false)
                     return "";
+
                 else return "0.0.0.0";
             }
 
