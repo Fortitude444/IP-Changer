@@ -19,28 +19,28 @@
         <Label Content="2. Konfiguráció" HorizontalAlignment="Left" Height="25" Margin="18,145,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="3. Konfiguráció" HorizontalAlignment="Left" Height="25" Margin="18,180,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="4. Konfiguráció" HorizontalAlignment="Left" Height="25" Margin="18,215,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="conf1IP" HorizontalAlignment="Left" Height="21" Margin="143,116,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="config1_ip_updated"/>
+        <TextBox Name="conf1IP" HorizontalAlignment="Left" Height="21" Margin="143,116,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="Config1_ip_updated"/>
         <TextBox Name="conf1Subnet" HorizontalAlignment="Left" Height="21" Margin="291,116,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
         <TextBox Name="conf1Gateway" HorizontalAlignment="Left" Height="21" Margin="439,116,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
-        <TextBox Name="conf2IP" HorizontalAlignment="Left" Height="21" Margin="143,148,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="config2_ip_updated"/>
+        <TextBox Name="conf2IP" HorizontalAlignment="Left" Height="21" Margin="143,148,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="Config2_ip_updated"/>
         <TextBox Name="conf2Subnet" HorizontalAlignment="Left" Height="21" Margin="291,148,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
         <TextBox Name="conf2Gateway" HorizontalAlignment="Left" Height="21" Margin="439,148,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
-        <TextBox Name="conf3IP" HorizontalAlignment="Left" Height="21" Margin="143,183,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="config3_ip_updated"/>
+        <TextBox Name="conf3IP" HorizontalAlignment="Left" Height="21" Margin="143,183,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="Config3_ip_updated"/>
         <TextBox Name ="conf3Subnet" HorizontalAlignment="Left" Height="21" Margin="291,183,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
         <TextBox Name="conf3Gateway" HorizontalAlignment="Left" Height="21" Margin="439,183,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
-        <TextBox Name="conf4IP" HorizontalAlignment="Left" Height="21" Margin="143,218,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="config4_ip_updated"/>
+        <TextBox Name="conf4IP" HorizontalAlignment="Left" Height="21" Margin="143,218,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="Config4_ip_updated"/>
         <TextBox Name ="conf4Subnet" HorizontalAlignment="Left" Height="21" Margin="291,218,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
         <TextBox Name="conf4Gateway" HorizontalAlignment="Left" Height="21" Margin="439,218,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
         <Label Content="5. Konfiguráció" HorizontalAlignment="Left" Height="25" Margin="18,248,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="conf5IP" HorizontalAlignment="Left" Height="21" Margin="143,251,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="config5_ip_updated"/>
+        <TextBox Name="conf5IP" HorizontalAlignment="Left" Height="21" Margin="143,251,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118" LostFocus="Config5_ip_updated"/>
         <TextBox Name ="conf5Subnet" HorizontalAlignment="Left" Height="21" Margin="291,251,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
         <TextBox Name="conf5Gateway" HorizontalAlignment="Left" Height="21" Margin="439,251,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="118"/>
         <Button Content="Ellenőriz" HorizontalAlignment="Left" Height="21" Margin="592,67,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,116,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf1"/>
-        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,148,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf2"/>
-        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,183,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf3"/>
-        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,218,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf4"/>
-        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,251,0,0" VerticalAlignment="Top" Width="75" Click="activate_conf5"/>
+        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,116,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf1"/>
+        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,148,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf2"/>
+        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,183,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf3"/>
+        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,218,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf4"/>
+        <Button Content="Aktivál" HorizontalAlignment="Left" Height="21" Margin="592,251,0,0" VerticalAlignment="Top" Width="75" Click="Activate_conf5"/>
         <ComboBox Name="networkinterfaceList" HorizontalAlignment="Left" Height="25" Margin="143,294,0,0" VerticalAlignment="Top" Width="223"/>
         <Label Content="Network Interface:" HorizontalAlignment="Left" Height="25" Margin="18,294,0,0" VerticalAlignment="Top" Width="120"/>
 

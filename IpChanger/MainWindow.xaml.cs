@@ -25,17 +25,17 @@ namespace IpChanger
         public MainWindow()
         {
             InitializeComponent();
-            loadUserConfig();
-            getCurrentInformations();
-            getInterfaces();
+            LoadUserConfig();
+            GetCurrentInformations();
+            GetInterfaces();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            getCurrentInformations();
+            GetCurrentInformations();
         }
 
-        public void getCurrentInformations()
+        public void GetCurrentInformations()
         {
             currentIpAddress.Text = GetLocalIPAddress();
             currentSubnetMask.Text = IPClassTester.GetSubnetMask(currentIpAddress.Text);
@@ -55,7 +55,7 @@ namespace IpChanger
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
-        public void setIP(string IPAddress, string SubnetMask, string Gateway)
+        public void SetIP(string IPAddress, string SubnetMask, string Gateway)
         {
             string selectedNetworkAdapter = networkinterfaceList.SelectedItem.ToString();
             var adapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
@@ -91,7 +91,7 @@ namespace IpChanger
         class IPClassTester
 
         {
-            static public string GetSubnetMask(string ipaddress)
+            public static string GetSubnetMask(string ipaddress)
             {
                 uint firstOctet = ReturnFirtsOctet(ipaddress);
                 if (firstOctet >= 0 && firstOctet <= 127 && firstOctet != 0)
@@ -109,7 +109,7 @@ namespace IpChanger
                 else return "0.0.0.0";
             }
 
-            static public string gatewayAutoComplete(string ipaddress)
+            public static string GatewayAutoComplete(string ipaddress)
             {
                 if (ipaddress.Contains(".") == true)
                 {
@@ -120,7 +120,7 @@ namespace IpChanger
                     return "";
             }
 
-            static public uint ReturnFirtsOctet(string ipAddress)
+            public static uint ReturnFirtsOctet(string ipAddress)
 
             {
                 IPAddress IP;
@@ -150,7 +150,7 @@ namespace IpChanger
                 .FirstOrDefault();
         }
 
-        public void saveUserConfig()
+        public void SaveUserConfig()
         {
 
             UserDefinedSaves.Default.konfig1ip = conf1IP.Text;
@@ -173,7 +173,7 @@ namespace IpChanger
             UserDefinedSaves.Default.konfig5subnet = conf5Subnet.Text;
             UserDefinedSaves.Default.konfig5gateway = conf5Gateway.Text;
         }
-        public void loadUserConfig()
+        public void LoadUserConfig()
         {
             conf1IP.Text = UserDefinedSaves.Default.konfig1ip;
             conf1Subnet.Text = UserDefinedSaves.Default.konfig1subnet;
@@ -196,7 +196,7 @@ namespace IpChanger
             conf5Gateway.Text = UserDefinedSaves.Default.konfig5gateway;
         }
 
-        public string subnetAutoComplete(string IPTextbox)
+        public string SubnetAutoComplete(string IPTextbox)
         {
             return IPClassTester.GetSubnetMask(IPTextbox);
 
@@ -204,81 +204,81 @@ namespace IpChanger
 
         private void On_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            saveUserConfig();
+            SaveUserConfig();
             UserDefinedSaves.Default.Save();
         }
 
-        private void config1_ip_updated(object sender, RoutedEventArgs e)
+        private void Config1_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf1Subnet.Text = subnetAutoComplete(conf1IP.Text);
-            conf1Gateway.Text = IPClassTester.gatewayAutoComplete(conf1IP.Text);
+            conf1Subnet.Text = SubnetAutoComplete(conf1IP.Text);
+            conf1Gateway.Text = IPClassTester.GatewayAutoComplete(conf1IP.Text);
         }
 
-        private void config2_ip_updated(object sender, RoutedEventArgs e)
+        private void Config2_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf2Subnet.Text = subnetAutoComplete(conf2IP.Text);
-            conf2Gateway.Text = IPClassTester.gatewayAutoComplete(conf2IP.Text);
+            conf2Subnet.Text = SubnetAutoComplete(conf2IP.Text);
+            conf2Gateway.Text = IPClassTester.GatewayAutoComplete(conf2IP.Text);
         }
 
-        private void config3_ip_updated(object sender, RoutedEventArgs e)
+        private void Config3_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf3Subnet.Text = subnetAutoComplete(conf3IP.Text);
-            conf3Gateway.Text = IPClassTester.gatewayAutoComplete(conf3IP.Text);
+            conf3Subnet.Text = SubnetAutoComplete(conf3IP.Text);
+            conf3Gateway.Text = IPClassTester.GatewayAutoComplete(conf3IP.Text);
         }
 
-        private void config4_ip_updated(object sender, RoutedEventArgs e)
+        private void Config4_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf4Subnet.Text = subnetAutoComplete(conf4IP.Text);
-            conf4Gateway.Text = IPClassTester.gatewayAutoComplete(conf4IP.Text);
+            conf4Subnet.Text = SubnetAutoComplete(conf4IP.Text);
+            conf4Gateway.Text = IPClassTester.GatewayAutoComplete(conf4IP.Text);
         }
 
-        private void config5_ip_updated(object sender, RoutedEventArgs e)
+        private void Config5_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf5Subnet.Text = subnetAutoComplete(conf5IP.Text);
-            conf5Gateway.Text = IPClassTester.gatewayAutoComplete(conf5IP.Text);
+            conf5Subnet.Text = SubnetAutoComplete(conf5IP.Text);
+            conf5Gateway.Text = IPClassTester.GatewayAutoComplete(conf5IP.Text);
         }
 
-        private void activate_conf1(object sender, RoutedEventArgs e)
+        private void Activate_conf1(object sender, RoutedEventArgs e)
         {
             if (conf1IP.Text != "")
             {
-                setIP(conf1IP.Text, conf1Subnet.Text, conf1Gateway.Text);
+                SetIP(conf1IP.Text, conf1Subnet.Text, conf1Gateway.Text);
             }
         }
 
-        private void activate_conf2(object sender, RoutedEventArgs e)
+        private void Activate_conf2(object sender, RoutedEventArgs e)
         {
             if (conf2IP.Text != "")
             {
-                setIP(conf2IP.Text, conf2Subnet.Text, conf2Gateway.Text);
+                SetIP(conf2IP.Text, conf2Subnet.Text, conf2Gateway.Text);
             }
         }
 
-        private void activate_conf3(object sender, RoutedEventArgs e)
+        private void Activate_conf3(object sender, RoutedEventArgs e)
         {
             if (conf3IP.Text != "")
             {
-                setIP(conf3IP.Text, conf3Subnet.Text, conf3Gateway.Text);
+                SetIP(conf3IP.Text, conf3Subnet.Text, conf3Gateway.Text);
             }
         }
 
-        private void activate_conf4(object sender, RoutedEventArgs e)
+        private void Activate_conf4(object sender, RoutedEventArgs e)
         {
             if (conf4IP.Text != "")
             {
-                setIP(conf4IP.Text, conf4Subnet.Text, conf4Gateway.Text);
+                SetIP(conf4IP.Text, conf4Subnet.Text, conf4Gateway.Text);
             }
         }
 
-        private void activate_conf5(object sender, RoutedEventArgs e)
+        private void Activate_conf5(object sender, RoutedEventArgs e)
         {
             if (conf5IP.Text != "")
             {
-                setIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text);
+                SetIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text);
             }
         }
 
-        public void getInterfaces()
+        public void GetInterfaces()
         {
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in nics)
