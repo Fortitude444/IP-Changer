@@ -37,22 +37,9 @@ namespace IpChanger
 
         public void GetCurrentInformations()
         {
-            currentIpAddress.Text = GetLocalIPAddress();
+            currentIpAddress.Text = IpHelper.GetLocalIPAddress();
             currentSubnetMask.Text = IpHelper.GetSubnetMask(currentIpAddress.Text);
             currentDefaultGateway.Text = GetDefaultGateway().ToString();
-        }
-
-        public static string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
         public void SetIP(string IPAddress, string SubnetMask, string Gateway)
