@@ -39,6 +39,10 @@ namespace IpChanger
 
             else return "0.0.0.0";
         }
+        public static string SubnetAutoComplete(string IPTextbox)
+        {
+            return IpHelper.GetSubnetMask(IPTextbox);
+        }
         public static string GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());

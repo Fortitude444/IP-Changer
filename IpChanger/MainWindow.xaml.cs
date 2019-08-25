@@ -42,8 +42,6 @@ namespace IpChanger
             currentDefaultGateway.Text = IpHelper.GetDefaultGateway().ToString();
         }
 
-        
-
         public void SaveUserConfig()
         {
 
@@ -90,12 +88,6 @@ namespace IpChanger
             conf5Gateway.Text = UserDefinedSaves.Default.konfig5gateway;
         }
 
-        public string SubnetAutoComplete(string IPTextbox)
-        {
-            return IpHelper.GetSubnetMask(IPTextbox);
-
-        }
-
         private void On_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveUserConfig();
@@ -104,31 +96,31 @@ namespace IpChanger
 
         private void Config1_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf1Subnet.Text = SubnetAutoComplete(conf1IP.Text);
+            conf1Subnet.Text = IpHelper.SubnetAutoComplete(conf1IP.Text);
             conf1Gateway.Text = IpHelper.GatewayAutoComplete(conf1IP.Text);
         }
 
         private void Config2_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf2Subnet.Text = SubnetAutoComplete(conf2IP.Text);
+            conf2Subnet.Text = IpHelper.SubnetAutoComplete(conf2IP.Text);
             conf2Gateway.Text = IpHelper.GatewayAutoComplete(conf2IP.Text);
         }
 
         private void Config3_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf3Subnet.Text = SubnetAutoComplete(conf3IP.Text);
+            conf3Subnet.Text = IpHelper.SubnetAutoComplete(conf3IP.Text);
             conf3Gateway.Text = IpHelper.GatewayAutoComplete(conf3IP.Text);
         }
 
         private void Config4_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf4Subnet.Text = SubnetAutoComplete(conf4IP.Text);
+            conf4Subnet.Text = IpHelper.SubnetAutoComplete(conf4IP.Text);
             conf4Gateway.Text = IpHelper.GatewayAutoComplete(conf4IP.Text);
         }
 
         private void Config5_ip_updated(object sender, RoutedEventArgs e)
         {
-            conf5Subnet.Text = SubnetAutoComplete(conf5IP.Text);
+            conf5Subnet.Text = IpHelper.SubnetAutoComplete(conf5IP.Text);
             conf5Gateway.Text = IpHelper.GatewayAutoComplete(conf5IP.Text);
         }
 
