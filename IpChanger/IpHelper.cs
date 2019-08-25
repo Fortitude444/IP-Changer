@@ -63,6 +63,38 @@ namespace IpChanger
                 .FirstOrDefault();
         }
 
+        public static void SetIP(string IPAddress, string SubnetMask, string Gateway, string selectedNetworkAdapter)
+        {
+            var adapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            var networkCollection = adapterConfig.GetInstances();
+
+            foreach (ManagementObject adapter in networkCollection)
+            {
+                string description = adapter["Description"] as string;
+                if (string.Compare(description,
+                    selectedNetworkAdapter, StringComparison.InvariantCultureIgnoreCase) == 0)
+                {
+                    try
+                    {
+                        var newGateway = adapter.GetMethodParameters("SetGateways");    // set def. gateway
+                        newGateway["DefaultIPGateway"] = new string[] { Gateway };
+                        newGateway["GatewayCostMetric"] = new int[] { 1 };
+
+                        var newAddress = adapter.GetMethodParameters("EnableStatic");   // set IP + subnet
+                        newAddress["IPAddress"] = new string[] { IPAddress };
+                        newAddress["SubnetMask"] = new string[] { SubnetMask };
+
+                        adapter.InvokeMethod("EnableStatic", newAddress, null);
+                        adapter.InvokeMethod("SetGateways", newGateway, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Nem sikerült beállítani a kívánt IP-címet\n {0}", ex.ToString());
+                    }
+                }
+            }
+        }
+
         public static string GatewayAutoComplete(string ipaddress)
         {
             if (ipaddress.Contains(".") == true)

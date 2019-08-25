@@ -42,38 +42,7 @@ namespace IpChanger
             currentDefaultGateway.Text = IpHelper.GetDefaultGateway().ToString();
         }
 
-        public void SetIP(string IPAddress, string SubnetMask, string Gateway)
-        {
-            string selectedNetworkAdapter = networkinterfaceList.SelectedItem.ToString();
-            var adapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
-            var networkCollection = adapterConfig.GetInstances();
-
-            foreach (ManagementObject adapter in networkCollection)
-            {
-                string description = adapter["Description"] as string;
-                if (string.Compare(description,
-                    selectedNetworkAdapter, StringComparison.InvariantCultureIgnoreCase) == 0)
-                {
-                    try
-                    {
-                        var newGateway = adapter.GetMethodParameters("SetGateways");    // set def. gateway
-                        newGateway["DefaultIPGateway"] = new string[] { Gateway };
-                        newGateway["GatewayCostMetric"] = new int[] { 1 };
-
-                        var newAddress = adapter.GetMethodParameters("EnableStatic");   // set IP + subnet
-                        newAddress["IPAddress"] = new string[] { IPAddress };
-                        newAddress["SubnetMask"] = new string[] { SubnetMask };
-
-                        adapter.InvokeMethod("EnableStatic", newAddress, null);
-                        adapter.InvokeMethod("SetGateways", newGateway, null);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Nem sikerült beállítani a kívánt IP-címet\n {0}", ex.ToString());
-                    }
-                }
-            }
-        }
+        
 
         public void SaveUserConfig()
         {
@@ -167,7 +136,7 @@ namespace IpChanger
         {
             if (conf1IP.Text != "")
             {
-                SetIP(conf1IP.Text, conf1Subnet.Text, conf1Gateway.Text);
+                IpHelper.SetIP(conf1IP.Text, conf1Subnet.Text, conf1Gateway.Text, networkinterfaceList.SelectedItem.ToString());
             }
         }
 
@@ -175,7 +144,7 @@ namespace IpChanger
         {
             if (conf2IP.Text != "")
             {
-                SetIP(conf2IP.Text, conf2Subnet.Text, conf2Gateway.Text);
+                IpHelper.SetIP(conf2IP.Text, conf2Subnet.Text, conf2Gateway.Text, networkinterfaceList.SelectedItem.ToString());
             }
         }
 
@@ -183,7 +152,7 @@ namespace IpChanger
         {
             if (conf3IP.Text != "")
             {
-                SetIP(conf3IP.Text, conf3Subnet.Text, conf3Gateway.Text);
+                IpHelper.SetIP(conf3IP.Text, conf3Subnet.Text, conf3Gateway.Text, networkinterfaceList.SelectedItem.ToString());
             }
         }
 
@@ -191,7 +160,7 @@ namespace IpChanger
         {
             if (conf4IP.Text != "")
             {
-                SetIP(conf4IP.Text, conf4Subnet.Text, conf4Gateway.Text);
+                IpHelper.SetIP(conf4IP.Text, conf4Subnet.Text, conf4Gateway.Text, networkinterfaceList.SelectedItem.ToString());
             }
         }
 
@@ -199,7 +168,7 @@ namespace IpChanger
         {
             if (conf5IP.Text != "")
             {
-                SetIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text);
+                IpHelper.SetIP(conf5IP.Text, conf5Subnet.Text, conf5Gateway.Text, networkinterfaceList.SelectedItem.ToString());
             }
         }
 
