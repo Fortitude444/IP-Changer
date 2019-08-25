@@ -39,7 +39,7 @@ namespace IpChanger
         {
             currentIpAddress.Text = IpHelper.GetLocalIPAddress();
             currentSubnetMask.Text = IpHelper.GetSubnetMask(currentIpAddress.Text);
-            currentDefaultGateway.Text = GetDefaultGateway().ToString();
+            currentDefaultGateway.Text = IpHelper.GetDefaultGateway().ToString();
         }
 
         public void SetIP(string IPAddress, string SubnetMask, string Gateway)
@@ -73,18 +73,6 @@ namespace IpChanger
                     }
                 }
             }
-        }
-
-        public static IPAddress GetDefaultGateway()
-        {
-            return NetworkInterface
-                .GetAllNetworkInterfaces()
-                .Where(n => n.OperationalStatus == OperationalStatus.Up)
-                .Where(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                .SelectMany(n => n.GetIPProperties()?.GatewayAddresses)
-                .Select(g => g?.Address)
-                .Where(a => a != null)
-                .FirstOrDefault();
         }
 
         public void SaveUserConfig()
