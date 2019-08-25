@@ -2,7 +2,7 @@
 
 namespace IpChanger
 {
-    class IPClassTester
+    static class IpHelper
     {
         public static string GetSubnetMask(string ipaddress)
         {

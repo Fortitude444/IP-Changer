@@ -38,7 +38,7 @@ namespace IpChanger
         public void GetCurrentInformations()
         {
             currentIpAddress.Text = GetLocalIPAddress();
-            currentSubnetMask.Text = IPClassTester.GetSubnetMask(currentIpAddress.Text);
+            currentSubnetMask.Text = IpHelper.GetSubnetMask(currentIpAddress.Text);
             currentDefaultGateway.Text = GetDefaultGateway().ToString();
         }
 
@@ -148,7 +148,7 @@ namespace IpChanger
 
         public string SubnetAutoComplete(string IPTextbox)
         {
-            return IPClassTester.GetSubnetMask(IPTextbox);
+            return IpHelper.GetSubnetMask(IPTextbox);
 
         }
 
@@ -161,31 +161,31 @@ namespace IpChanger
         private void Config1_ip_updated(object sender, RoutedEventArgs e)
         {
             conf1Subnet.Text = SubnetAutoComplete(conf1IP.Text);
-            conf1Gateway.Text = IPClassTester.GatewayAutoComplete(conf1IP.Text);
+            conf1Gateway.Text = IpHelper.GatewayAutoComplete(conf1IP.Text);
         }
 
         private void Config2_ip_updated(object sender, RoutedEventArgs e)
         {
             conf2Subnet.Text = SubnetAutoComplete(conf2IP.Text);
-            conf2Gateway.Text = IPClassTester.GatewayAutoComplete(conf2IP.Text);
+            conf2Gateway.Text = IpHelper.GatewayAutoComplete(conf2IP.Text);
         }
 
         private void Config3_ip_updated(object sender, RoutedEventArgs e)
         {
             conf3Subnet.Text = SubnetAutoComplete(conf3IP.Text);
-            conf3Gateway.Text = IPClassTester.GatewayAutoComplete(conf3IP.Text);
+            conf3Gateway.Text = IpHelper.GatewayAutoComplete(conf3IP.Text);
         }
 
         private void Config4_ip_updated(object sender, RoutedEventArgs e)
         {
             conf4Subnet.Text = SubnetAutoComplete(conf4IP.Text);
-            conf4Gateway.Text = IPClassTester.GatewayAutoComplete(conf4IP.Text);
+            conf4Gateway.Text = IpHelper.GatewayAutoComplete(conf4IP.Text);
         }
 
         private void Config5_ip_updated(object sender, RoutedEventArgs e)
         {
             conf5Subnet.Text = SubnetAutoComplete(conf5IP.Text);
-            conf5Gateway.Text = IPClassTester.GatewayAutoComplete(conf5IP.Text);
+            conf5Gateway.Text = IpHelper.GatewayAutoComplete(conf5IP.Text);
         }
 
         private void Activate_conf1(object sender, RoutedEventArgs e)
