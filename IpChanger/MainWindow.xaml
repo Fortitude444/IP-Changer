@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="IP Address Changer" Height="370" Width="700" Closing="On_Closing">
     <Grid>
-        <Label Content="IP Address Changer v1.1&#xD;&#xA;" HorizontalAlignment="Left" Height="26" Margin="278,5,0,0" VerticalAlignment="Top" Width="146"/>
+        <Label Content="IP Address Changer v1.0" HorizontalAlignment="Left" Height="26" Margin="278,5,0,0" VerticalAlignment="Top" Width="146"/>
         <Label Content="Jelenlegi beállítások:" HorizontalAlignment="Left" Height="30" Margin="15,65,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox Name ="currentIpAddress" HorizontalAlignment="Left" Height="21" Margin="143,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118"/>
         <Label Content="IP Cím" HorizontalAlignment="Left" Height="26" Margin="140,36,0,0" VerticalAlignment="Top" Width="118"/>
