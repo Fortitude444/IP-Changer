@@ -27,7 +27,6 @@ namespace IpChanger
             InitializeComponent();
             LoadUserConfig();
             GetInterfaces();
-            GetCurrentInformations();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
