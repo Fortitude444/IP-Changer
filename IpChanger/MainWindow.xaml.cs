@@ -26,8 +26,8 @@ namespace IpChanger
         {
             InitializeComponent();
             LoadUserConfig();
-            GetCurrentInformations();
             GetInterfaces();
+            GetCurrentInformations();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -37,9 +37,11 @@ namespace IpChanger
 
         public void GetCurrentInformations()
         {
-            currentIpAddress.Text = IpHelper.GetLocalIPAddress();
+            NetworkInterface selectedNetworkInterface = GetSelectedNetworkInterface();
+
+            currentIpAddress.Text = IpHelper.GetLocalIPAddress(selectedNetworkInterface);
             currentSubnetMask.Text = IpHelper.GetSubnetMask(currentIpAddress.Text);
-            currentDefaultGateway.Text = IpHelper.GetDefaultGateway().ToString();
+            currentDefaultGateway.Text = IpHelper.GetDefaultGateway(selectedNetworkInterface);
         }
 
         public void SaveUserConfig()
@@ -174,6 +176,6 @@ namespace IpChanger
             networkinterfaceList.SelectedIndex = 0;
         }
 
-        private NetworkInterface GetSelectedNetworkInterface() => (NetworkInterface)networkinterfaceList.SelectedItem;
+        public NetworkInterface GetSelectedNetworkInterface() => (NetworkInterface)networkinterfaceList.SelectedItem;
     }
 }

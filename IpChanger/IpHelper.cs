@@ -6,6 +6,7 @@ using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,28 +44,62 @@ namespace IpChanger
         {
             return IpHelper.GetSubnetMask(IPTextbox);
         }
-        public static string GetLocalIPAddress()
+        public static string GetLocalIPAddress(NetworkInterface selectedNetworkInterface)
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
+            UnicastIPAddressInformation mostSuitableIp = null;
+
+            //if (selectedNetworkInterface.OperationalStatus != OperationalStatus.Up)
+            //    continue;
+
+            var properties = selectedNetworkInterface.GetIPProperties();
+
+            //if (properties.GatewayAddresses.Count == 0)
+            //    continue;
+
+            foreach (var address in properties.UnicastAddresses)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                if (address.Address.AddressFamily != AddressFamily.InterNetwork)
+                    continue;
+
+                if (IPAddress.IsLoopback(address.Address))
+                    continue;
+
+                if (!address.IsDnsEligible)
                 {
-                    return ip.ToString();
+                    if (mostSuitableIp == null)
+                        mostSuitableIp = address;
+                    continue;
                 }
+
+                // The best IP is the IP got from DHCP server
+                if (address.PrefixOrigin != PrefixOrigin.Dhcp)
+                {
+                    if (mostSuitableIp == null || !mostSuitableIp.IsDnsEligible)
+                        mostSuitableIp = address;
+                    continue;
+                }
+
+                return address.Address.ToString();
             }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
+
+            return mostSuitableIp != null
+                ? mostSuitableIp.Address.ToString()
+                : "";
         }
-        public static IPAddress GetDefaultGateway()
+        public static string GetDefaultGateway(NetworkInterface selectedNetworkInterface)
         {
-            return NetworkInterface
-                .GetAllNetworkInterfaces()
-                .Where(n => n.OperationalStatus == OperationalStatus.Up)
-                .Where(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                .SelectMany(n => n.GetIPProperties()?.GatewayAddresses)
+            var gateway = selectedNetworkInterface
+                .GetIPProperties()
+                ?.GatewayAddresses
                 .Select(g => g?.Address)
                 .Where(a => a != null)
-                .FirstOrDefault();
+                .FirstOrDefault()
+                ?.ToString();
+
+            if (gateway == null)
+                return "";
+            else
+                return gateway;
         }
 
         public static void SetIP(string ipAddress, string subnetMask, string defaultGateway, string networkAdapterName)
@@ -111,5 +146,6 @@ namespace IpChanger
             else
                 return 0;
         }
+
     }
 }
